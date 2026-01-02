@@ -26,5 +26,9 @@ func main() {
     // Start server
     log.Printf("Starting server on :%s...", port)
     e.Logger.Fatal(e.Start(":" + port))
+    
+    dbh := db.UsersDBHandler{}
+    dbh.RunMigrations()
+
 }
 
