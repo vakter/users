@@ -2,8 +2,8 @@ package main
 
 import (
     "github.com/labstack/echo/v4"
-    
-   
+    "os"
+    "log"
     "github.com/vakter/users/actions"
 )
 
@@ -15,6 +15,16 @@ func main() {
     e.PUT("/users/:id", actions.UpdateUser)
     e.DELETE("/users/:id", actions.DeleteUser)
     e.GET("/users", actions.GetUsers)
+    
+    
 
-    e.Logger.Fatal(e.Start(":8080"))
+    port := os.Getenv("SERVER_PORT")
+    if port == ""{
+        port = ":8080" // Default port
+    }
+
+    // Start server
+    log.Printf("Starting server on :%s...", port)
+    e.Logger.Fatal(e.Start(":" + port))
 }
+
