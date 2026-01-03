@@ -5,9 +5,15 @@ import (
     "os"
     "log"
     "github.com/vakter/users/actions"
+    "github.com/vakter/users/db"
+    "github.com/go-pg/pg/v10"
+    "github.com/vakter/libs/dbhandler"
 )
 
 func main() {
+    dbh := db.UsersDBHandler{}
+    dbh.RunMigrations()
+
     e := echo.New()
 
     e.POST("/users", actions.CreateUser)
@@ -27,8 +33,6 @@ func main() {
     log.Printf("Starting server on :%s...", port)
     e.Logger.Fatal(e.Start(":" + port))
     
-    dbh := db.UsersDBHandler{}
-    dbh.RunMigrations()
 
 }
 
